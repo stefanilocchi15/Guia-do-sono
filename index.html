@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autoavaliação — Higiene do Sono</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0D1B2A 0%, #1B2838 50%, #0D1B2A 100%);
+  min-height: 100vh;
+  color: #E8E6DF;
+  padding: 20px;
+}
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* INTRO SCREEN */
+.intro {
+  text-align: center;
+  padding: 60px 20px;
+  animation: fadeIn 0.8s ease;
+}
+
+.intro .moon {
+  width: 80px; height: 80px;
+  background: #F4C95D;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  position: relative;
+  box-shadow: 0 0 40px rgba(244,201,93,0.3);
+}
+.intro .moon::after {
+  content: '';
+  position: absolute;
+  width: 60px; height: 60px;
+  background: #0D1B2A;
+  border-radius: 50%;
+  top: -8px; right: -12px;
+}
+
+.intro h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.intro .subtitle {
+  font-size: 15px;
+  color: #8899AA;
+  margin-bottom: 32px;
+  line-height: 1.6;
+}
+
+.intro .badge {
+  display: inline-block;
+  background: rgba(26,122,109,0.2);
+  border: 1px solid rgba(26,122,109,0.4);
+  color: #5DCAA5;
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 32px;
+}
+
+.btn-start {
+  background: #1A7A6D;
+  color: #fff;
+  border: none;
+  padding: 14px 40px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-start:hover { background: #22917F; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,122,109,0.3); }
+
+/* PROGRESS */
+.progress-bar {
+  background: rgba(255,255,255,0.08);
+  height: 6px;
+  border-radius: 3px;
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #1A7A6D, #5DCAA5);
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.progress-text {
+  text-align: center;
+  font-size: 13px;
+  color: #8899AA;
+  margin-bottom: 20px;
+}
+
+/* QUESTION CARD */
+.question-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 16px;
+  animation: slideUp 0.4s ease;
+}
+
+.q-category {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  padding: 4px 12px;
+  border-radius: 6px;
+  display: inline-block;
+}
+.cat-horarios { background: rgba(46,117,182,0.2); color: #85B7EB; }
+.cat-telas { background: rgba(229,57,53,0.15); color: #F09595; }
+.cat-ambiente { background: rgba(26,122,109,0.2); color: #5DCAA5; }
+.cat-habitos { background: rgba(244,201,93,0.15); color: #F4C95D; }
+.cat-estresse { background: rgba(149,117,205,0.2); color: #CE93D8; }
+
+.q-text {
+  font-size: 17px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+  color: #C2C0B6;
+}
+.option:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.15); }
+.option.selected { background: rgba(26,122,109,0.15); border-color: #1A7A6D; color: #5DCAA5; }
+
+.option .radio {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  position: relative;
+}
+.option.selected .radio {
+  border-color: #1A7A6D;
+  background: #1A7A6D;
+}
+.option.selected .radio::after {
+  content: '';
+  width: 6px; height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 24px;
+}
+
+.btn-nav {
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  border: none;
+}
+.btn-back { background: rgba(255,255,255,0.08); color: #8899AA; }
+.btn-back:hover { background: rgba(255,255,255,0.12); }
+.btn-next { background: #1A7A6D; color: #fff; }
+.btn-next:hover { background: #22917F; }
+.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* RESULT SCREEN */
+.result {
+  text-align: center;
+  animation: fadeIn 0.8s ease;
+  padding: 20px 0;
+}
+
+.score-circle {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.score-circle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px solid rgba(255,255,255,0.1);
+}
+.score-num { font-size: 48px; font-weight: 700; color: #fff; line-height: 1; }
+.score-max { font-size: 14px; color: #8899AA; margin-top: 4px; }
+
+.level-badge {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 24px;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.level-desc {
+  font-size: 15px;
+  color: #AAB0B8;
+  line-height: 1.7;
+  margin-bottom: 32px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.category-results {
+  text-align: left;
+  margin-bottom: 32px;
+}
+
+.cat-result {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 10px;
+}
+.cat-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.cat-result-name { font-size: 14px; font-weight: 600; color: #fff; }
+.cat-result-score { font-size: 13px; font-weight: 500; }
+
+.cat-bar {
+  height: 6px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+.cat-bar-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+
+.cat-tip {
+  font-size: 12px;
+  color: #8899AA;
+  line-height: 1.5;
+}
+
+.result-footer {
+  background: rgba(26,122,109,0.1);
+  border: 1px solid rgba(26,122,109,0.2);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: left;
+  margin-bottom: 24px;
+}
+.result-footer h3 {
+  font-size: 15px;
+  color: #5DCAA5;
+  margin-bottom: 8px;
+}
+.result-footer p {
+  font-size: 13px;
+  color: #8899AA;
+  line-height: 1.6;
+}
+
+.btn-restart {
+  background: rgba(255,255,255,0.08);
+  color: #AAB0B8;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-restart:hover { background: rgba(255,255,255,0.12); }
+
+.source {
+  margin-top: 24px;
+  font-size: 11px;
+  color: #556;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.hidden { display: none; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <!-- INTRO -->
+  <div id="intro" class="intro">
+    <div class="moon"></div>
+    <h1>Como anda seu sono?</h1>
+    <p class="subtitle">Uma autoavaliacao baseada em evidencias cientificas para voce entender como seus habitos impactam a qualidade do seu sono.</p>
+    <div class="badge">10 perguntas &middot; 2 minutos</div>
+    <br><br>
+    <button class="btn-start" onclick="startQuiz()">Comecar avaliacao</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="quiz" class="hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-text" id="progressText"></div>
+    <div id="questionArea"></div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-back" id="btnBack" onclick="prevQuestion()">Voltar</button>
+      <button class="btn-nav btn-next" id="btnNext" onclick="nextQuestion()" disabled>Proximo</button>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="result" class="result hidden"></div>
+</div>
+
+<script>
+const questions = [
+  {
+    category: "Horarios",
+    catClass: "cat-horarios",
+    text: "Voce costuma dormir e acordar nos mesmos horarios todos os dias (incluindo fins de semana)?",
+    options: ["Nunca ou raramente", "As vezes", "Na maioria dos dias", "Sempre ou quase sempre"],
+    scores: [0, 1, 2, 3],
+    tip: "Manter horarios regulares e um dos componentes mais importantes da higiene do sono. Padroes irregulares estao associados a piores notas e atraso no ritmo circadiano."
+  },
+  {
+    category: "Horarios",
+    catClass: "cat-horarios",
+    text: "Quantas horas voce dorme, em media, por noite?",
+    options: ["Menos de 5 horas", "Entre 5 e 6 horas", "Entre 6 e 7 horas", "7 horas ou mais"],
+    scores: [0, 1, 2, 3],
+    tip: "O recomendado para adultos jovens e de 7 a 9 horas. Estudos mostram que 68% dos universitarios dormem apenas 6-7h por noite."
+  },
+  {
+    category: "Telas",
+    catClass: "cat-telas",
+    text: "Voce usa celular, tablet ou computador nos 30 minutos antes de dormir?",
+    options: ["Sempre, ate pegar no sono", "Na maioria das noites", "As vezes", "Raramente ou nunca"],
+    scores: [0, 1, 2, 3],
+    tip: "A luz azul das telas suprime a producao de melatonina. Estudos indicam que 100% dos universitarios de uma amostra usavam telas antes de dormir."
+  },
+  {
+    category: "Telas",
+    catClass: "cat-telas",
+    text: "Voce sente que usa o celular por mais tempo do que pretendia antes de dormir?",
+    options: ["Sempre", "Na maioria das vezes", "As vezes", "Raramente ou nunca"],
+    scores: [0, 1, 2, 3],
+    tip: "O uso de smartphone antes de dormir cria um ciclo vicioso: quanto mais se usa, maior a dependencia, pior o sono."
+  },
+  {
+    category: "Ambiente",
+    catClass: "cat-ambiente",
+    text: "Seu quarto e escuro, silencioso e com temperatura agradavel na hora de dormir?",
+    options: ["Nao, nenhuma dessas condicoes", "Apenas uma dessas condicoes", "Duas dessas condicoes", "Sim, todas as tres"],
+    scores: [0, 1, 2, 3],
+    tip: "Luz, ruido e temperatura sao componentes ambientais da higiene do sono citados em mais de 30% dos estudos cientificos."
+  },
+  {
+    category: "Ambiente",
+    catClass: "cat-ambiente",
+    text: "Voce usa a cama para outras atividades alem de dormir (estudar, comer, assistir videos)?",
+    options: ["Sempre", "Na maioria das vezes", "As vezes", "Raramente ou nunca"],
+    scores: [0, 1, 2, 3],
+    tip: "O controle de estimulos e uma tecnica validada: usar a cama so para dormir fortalece a associacao mental entre cama e sono."
+  },
+  {
+    category: "Habitos",
+    catClass: "cat-habitos",
+    text: "Voce consome cafe, energetico ou cha preto apos as 18h?",
+    options: ["Todos os dias", "Na maioria dos dias", "Eventualmente", "Nunca ou raramente"],
+    scores: [0, 1, 2, 3],
+    tip: "A cafeina e o componente de higiene do sono mais citado na literatura (51% dos estudos). O ideal e evita-la pelo menos 6 horas antes de dormir."
+  },
+  {
+    category: "Habitos",
+    catClass: "cat-habitos",
+    text: "Voce pratica alguma atividade fisica regularmente?",
+    options: ["Nao pratico", "Raramente (1x por semana)", "Algumas vezes (2-3x)", "Regularmente (4x ou mais)"],
+    scores: [0, 1, 2, 3],
+    tip: "Exercicio regular melhora a qualidade do sono. Sistemas de IA ja demonstraram que personalizar exercicios melhora o sono como efeito secundario."
+  },
+  {
+    category: "Estresse",
+    catClass: "cat-estresse",
+    text: "Voce costuma ir para a cama com a mente acelerada (preocupacoes, lista de tarefas, ansiedade)?",
+    options: ["Sempre", "Na maioria das noites", "As vezes", "Raramente ou nunca"],
+    scores: [0, 1, 2, 3],
+    tip: "O estresse academico e mediador direto da qualidade do sono. Tecnicas de relaxamento e mindfulness antes de dormir ajudam a desacelerar."
+  },
+  {
+    category: "Estresse",
+    catClass: "cat-estresse",
+    text: "Voce tem uma rotina de relaxamento antes de dormir (leitura, alongamento, respiracao)?",
+    options: ["Nunca", "Raramente", "As vezes", "Na maioria das noites"],
+    scores: [0, 1, 2, 3],
+    tip: "Ter uma rotina pre-sono sinaliza ao corpo que e hora de desacelerar. E um dos componentes presentes em todas as 5 escalas de higiene do sono validadas."
+  }
+];
+
+let currentQ = 0;
+let answers = new Array(questions.length).fill(-1);
+
+function startQuiz() {
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  const total = questions.length;
+
+  document.getElementById('progressFill').style.width = ((currentQ + 1) / total * 100) + '%';
+  document.getElementById('progressText').textContent = `Pergunta ${currentQ + 1} de ${total}`;
+
+  let html = `<div class="question-card">`;
+  html += `<span class="q-category ${q.catClass}">${q.category}</span>`;
+  html += `<p class="q-text">${q.text}</p>`;
+  html += `<div class="options">`;
+
+  q.options.forEach((opt, i) => {
+    const sel = answers[currentQ] === i ? 'selected' : '';
+    html += `<div class="option ${sel}" onclick="selectOption(${i})">`;
+    html += `<div class="radio"></div>`;
+    html += `<span>${opt}</span>`;
+    html += `</div>`;
+  });
+
+  html += `</div></div>`;
+  document.getElementById('questionArea').innerHTML = html;
+
+  document.getElementById('btnBack').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').disabled = answers[currentQ] === -1;
+  document.getElementById('btnNext').textContent = currentQ === total - 1 ? 'Ver resultado' : 'Proximo';
+}
+
+function selectOption(i) {
+  answers[currentQ] = i;
+  renderQuestion();
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === -1) return;
+  if (currentQ < questions.length - 1) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz').classList.add('hidden');
+  const resultDiv = document.getElementById('result');
+  resultDiv.classList.remove('hidden');
+
+  let total = 0;
+  answers.forEach((a, i) => { total += questions[i].scores[a]; });
+  const maxScore = questions.length * 3;
+  const pct = Math.round(total / maxScore * 100);
+
+  // Categories
+  const cats = {
+    "Horarios": { score: 0, max: 0, items: [], color: "#85B7EB", bg: "rgba(46,117,182,0.15)" },
+    "Telas": { score: 0, max: 0, items: [], color: "#F09595", bg: "rgba(229,57,53,0.12)" },
+    "Ambiente": { score: 0, max: 0, items: [], color: "#5DCAA5", bg: "rgba(26,122,109,0.15)" },
+    "Habitos": { score: 0, max: 0, items: [], color: "#F4C95D", bg: "rgba(244,201,93,0.12)" },
+    "Estresse": { score: 0, max: 0, items: [], color: "#CE93D8", bg: "rgba(149,117,205,0.15)" }
+  };
+
+  answers.forEach((a, i) => {
+    const q = questions[i];
+    const cat = cats[q.category];
+    cat.score += q.scores[a];
+    cat.max += 3;
+    if (q.scores[a] <= 1) cat.items.push(q.tip);
+  });
+
+  let level, levelColor, levelBg, desc;
+  if (pct >= 80) {
+    level = "Excelente"; levelColor = "#2E7D32"; levelBg = "rgba(46,125,50,0.15)";
+    desc = "Seus habitos de sono estao muito bons! Voce ja pratica a maioria das recomendacoes de higiene do sono. Continue assim e compartilhe esse conhecimento com colegas que possam precisar.";
+  } else if (pct >= 60) {
+    level = "Bom, com pontos de atencao"; levelColor = "#1A7A6D"; levelBg = "rgba(26,122,109,0.15)";
+    desc = "Voce tem bons habitos de sono, mas alguns pontos merecem atencao. Pequenos ajustes podem fazer uma grande diferenca na sua qualidade de sono e no seu desempenho academico.";
+  } else if (pct >= 40) {
+    level = "Merece atencao"; levelColor = "#E6A817"; levelBg = "rgba(244,201,93,0.15)";
+    desc = "Sua higiene do sono precisa de melhorias em algumas areas. A boa noticia e que sao mudancas simples e graduais. Comece pelo ponto que parece mais facil de mudar e va progredindo.";
+  } else {
+    level = "Sinal de alerta"; levelColor = "#E53935"; levelBg = "rgba(229,57,53,0.12)";
+    desc = "Seus habitos de sono estao comprometendo significativamente sua qualidade de vida e provavelmente seu desempenho academico. Considere buscar orientacao profissional e comece a implementar as dicas do Guia do Sono hoje mesmo.";
+  }
+
+  let html = `
+    <div class="score-circle" style="background:${levelBg}; border: 3px solid ${levelColor};">
+      <span class="score-num">${total}</span>
+      <span class="score-max">de ${maxScore} pontos</span>
+    </div>
+    <div class="level-badge" style="background:${levelBg}; color:${levelColor};">${level}</div>
+    <p class="level-desc">${desc}</p>
+    <div class="category-results">
+  `;
+
+  for (const [name, cat] of Object.entries(cats)) {
+    const catPct = Math.round(cat.score / cat.max * 100);
+    const statusColor = catPct >= 70 ? "#5DCAA5" : catPct >= 40 ? "#F4C95D" : "#F09595";
+    const statusText = catPct >= 70 ? "Bom" : catPct >= 40 ? "Atencao" : "Critico";
+
+    html += `<div class="cat-result">
+      <div class="cat-result-header">
+        <span class="cat-result-name">${name}</span>
+        <span class="cat-result-score" style="color:${statusColor}">${cat.score}/${cat.max} — ${statusText}</span>
+      </div>
+      <div class="cat-bar"><div class="cat-bar-fill" style="width:${catPct}%; background:${cat.color};"></div></div>`;
+
+    if (cat.items.length > 0) {
+      html += `<div class="cat-tip">${cat.items[0]}</div>`;
+    }
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+
+  // Worst categories
+  const worstCats = Object.entries(cats)
+    .sort((a, b) => (a[1].score / a[1].max) - (b[1].score / b[1].max))
+    .slice(0, 2);
+
+  html += `<div class="result-footer">
+    <h3>Por onde comecar?</h3>
+    <p>Com base nas suas respostas, sugerimos focar primeiro em <strong>${worstCats[0][0]}</strong> e <strong>${worstCats[1][0]}</strong>. Escolha uma mudanca pequena em cada area e mantenha por 2 semanas antes de acrescentar outra. Mudancas graduais tem mais chance de se tornarem habitos permanentes.</p>
+  </div>`;
+
+  html += `<button class="btn-restart" onclick="restart()">Refazer avaliacao</button>`;
+
+  html += `<div class="source">
+    <br>Autoavaliacao baseada nos componentes de higiene do sono<br>
+    identificados na revisao integrativa de 18 artigos cientificos.<br>
+    Guia do Sono — TCC Biomedicina, Centro Universitario Sao Camilo, 2026.
+  </div>`;
+
+  resultDiv.innerHTML = html;
+
+  // Animate bars
+  setTimeout(() => {
+    document.querySelectorAll('.cat-bar-fill').forEach(bar => {
+      bar.style.width = bar.style.width;
+    });
+  }, 100);
+}
+
+function restart() {
+  answers = new Array(questions.length).fill(-1);
+  currentQ = 0;
+  document.getElementById('result').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+}
+</script>
+
+</body>
+</html>
