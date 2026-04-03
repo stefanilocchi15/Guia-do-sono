@@ -117,7 +117,7 @@ body {
   animation: slideUp 0.4s ease;
 }
 
-.q-category {
+.q-catégory {
   font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
@@ -127,10 +127,10 @@ body {
   border-radius: 6px;
   display: inline-block;
 }
-.cat-horarios { background: rgba(46,117,182,0.2); color: #85B7EB; }
+.cat-horários { background: rgba(46,117,182,0.2); color: #85B7EB; }
 .cat-telas { background: rgba(229,57,53,0.15); color: #F09595; }
 .cat-ambiente { background: rgba(26,122,109,0.2); color: #5DCAA5; }
-.cat-habitos { background: rgba(244,201,93,0.15); color: #F4C95D; }
+.cat-hábitos { background: rgba(244,201,93,0.15); color: #F4C95D; }
 .cat-estresse { background: rgba(149,117,205,0.2); color: #CE93D8; }
 
 .q-text {
@@ -253,7 +253,7 @@ body {
   margin-right: auto;
 }
 
-.category-results {
+.catégory-results {
   text-align: left;
   margin-bottom: 32px;
 }
@@ -342,10 +342,10 @@ body {
   <div id="intro" class="intro">
     <div class="moon"></div>
     <h1>Como anda seu sono?</h1>
-    <p class="subtitle">Uma autoavaliacao baseada em evidencias cientificas para voce entender como seus habitos impactam a qualidade do seu sono.</p>
+    <p class="subtitle">Uma autoavaliação baseada em evidências científicas para você entender como seus hábitos impactam a qualidade do seu sono.</p>
     <div class="badge">10 perguntas &middot; 2 minutos</div>
     <br><br>
-    <button class="btn-start" onclick="startQuiz()">Comecar avaliacao</button>
+    <button class="btn-start" onclick="startQuiz()">Começar avaliação</button>
   </div>
 
   <!-- QUIZ -->
@@ -355,7 +355,7 @@ body {
     <div id="questionArea"></div>
     <div class="nav-buttons">
       <button class="btn-nav btn-back" id="btnBack" onclick="prevQuestion()">Voltar</button>
-      <button class="btn-nav btn-next" id="btnNext" onclick="nextQuestion()" disabled>Proximo</button>
+      <button class="btn-nav btn-next" id="btnNext" onclick="nextQuestion()" disabled>Próximo</button>
     </div>
   </div>
 
@@ -366,84 +366,84 @@ body {
 <script>
 const questions = [
   {
-    category: "Horarios",
-    catClass: "cat-horarios",
-    text: "Voce costuma dormir e acordar nos mesmos horarios todos os dias (incluindo fins de semana)?",
-    options: ["Nunca ou raramente", "As vezes", "Na maioria dos dias", "Sempre ou quase sempre"],
+    catégory: "Horários",
+    catClass: "cat-horários",
+    text: "Você costuma dormir e acordar nos mesmos horários todos os dias (incluindo finais de semana)?",
+    options: ["Nunca ou raramente", "Às vezes", "Na maioria dos dias", "Sempre ou quase sempre"],
     scores: [0, 1, 2, 3],
-    tip: "Manter horarios regulares e um dos componentes mais importantes da higiene do sono. Padroes irregulares estao associados a piores notas e atraso no ritmo circadiano."
+    tip: "Manter horários regulares é um dos componentes mais importantes da higiene do sono. Padrões irregulares estão associados a piores notas e atraso no ritmo circadiano."
   },
   {
-    category: "Horarios",
-    catClass: "cat-horarios",
-    text: "Quantas horas voce dorme, em media, por noite?",
+    catégory: "Horários",
+    catClass: "cat-horários",
+    text: "Quantas horas você dorme, em média, por noite?",
     options: ["Menos de 5 horas", "Entre 5 e 6 horas", "Entre 6 e 7 horas", "7 horas ou mais"],
     scores: [0, 1, 2, 3],
-    tip: "O recomendado para adultos jovens e de 7 a 9 horas. Estudos mostram que 68% dos universitarios dormem apenas 6-7h por noite."
+    tip: "O recomendado para adultos jovens é de 7 a 9 horas. Estudos mostram que 68% dos universitários dormem apenas 6-7h por noite."
   },
   {
-    category: "Telas",
+    catégory: "Telas",
     catClass: "cat-telas",
-    text: "Voce usa celular, tablet ou computador nos 30 minutos antes de dormir?",
-    options: ["Sempre, ate pegar no sono", "Na maioria das noites", "As vezes", "Raramente ou nunca"],
+    text: "Você usa celular, tablet ou computador nos 30 minutos antes de dormir?",
+    options: ["Sempre, até pegar no sono", "Na maioria das noites", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "A luz azul das telas suprime a producao de melatonina. Estudos indicam que 100% dos universitarios de uma amostra usavam telas antes de dormir."
+    tip: "A luz azul das telas suprime a produção de melatonina. Estudos indicam que 100% dos universitários de uma amostra usavam telas antes de dormir."
   },
   {
-    category: "Telas",
+    catégory: "Telas",
     catClass: "cat-telas",
-    text: "Voce sente que usa o celular por mais tempo do que pretendia antes de dormir?",
-    options: ["Sempre", "Na maioria das vezes", "As vezes", "Raramente ou nunca"],
+    text: "Você sente que usa o celular por mais tempo do que pretendia antes de dormir?",
+    options: ["Sempre", "Na maioria das vezes", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "O uso de smartphone antes de dormir cria um ciclo vicioso: quanto mais se usa, maior a dependencia, pior o sono."
+    tip: "O uso de smartphone antes de dormir cria um ciclo vicioso: quanto mais se usa, maior a dependência, pior o sono."
   },
   {
-    category: "Ambiente",
+    catégory: "Ambiente",
     catClass: "cat-ambiente",
-    text: "Seu quarto e escuro, silencioso e com temperatura agradavel na hora de dormir?",
-    options: ["Nao, nenhuma dessas condicoes", "Apenas uma dessas condicoes", "Duas dessas condicoes", "Sim, todas as tres"],
+    text: "Seu quarto é escuro, silencioso e com temperatura agradável na hora de dormir?",
+    options: ["Não, nenhuma dessas condições", "Apenas uma dessas condições", "Duas dessas condições", "Sim, todas as três"],
     scores: [0, 1, 2, 3],
-    tip: "Luz, ruido e temperatura sao componentes ambientais da higiene do sono citados em mais de 30% dos estudos cientificos."
+    tip: "Luz, ruído e temperatura são componentes ambientais da higiene do sono citados em mais de 30% dos estudos científicos."
   },
   {
-    category: "Ambiente",
+    catégory: "Ambiente",
     catClass: "cat-ambiente",
-    text: "Voce usa a cama para outras atividades alem de dormir (estudar, comer, assistir videos)?",
-    options: ["Sempre", "Na maioria das vezes", "As vezes", "Raramente ou nunca"],
+    text: "Você usa a cama para outras atividades além de dormir (estudar, comer, assistir vídeos)?",
+    options: ["Sempre", "Na maioria das vezes", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "O controle de estimulos e uma tecnica validada: usar a cama so para dormir fortalece a associacao mental entre cama e sono."
+    tip: "O controle de estímulos é uma técnica validada: usar a cama só para dormir fortalece a associação mental entre cama e sono."
   },
   {
-    category: "Habitos",
-    catClass: "cat-habitos",
-    text: "Voce consome cafe, energetico ou cha preto apos as 18h?",
+    catégory: "Hábitos",
+    catClass: "cat-hábitos",
+    text: "Você consome café, energético ou chá preto após as 18h?",
     options: ["Todos os dias", "Na maioria dos dias", "Eventualmente", "Nunca ou raramente"],
     scores: [0, 1, 2, 3],
-    tip: "A cafeina e o componente de higiene do sono mais citado na literatura (51% dos estudos). O ideal e evita-la pelo menos 6 horas antes de dormir."
+    tip: "A cafeína é o componente de higiene do sono mais citado na literatura (51% dos estudos). O ideal é evitá-la pelo menos 6 horas antes de dormir."
   },
   {
-    category: "Habitos",
-    catClass: "cat-habitos",
-    text: "Voce pratica alguma atividade fisica regularmente?",
-    options: ["Nao pratico", "Raramente (1x por semana)", "Algumas vezes (2-3x)", "Regularmente (4x ou mais)"],
+    catégory: "Hábitos",
+    catClass: "cat-hábitos",
+    text: "Você pratica alguma atividade física regularmente?",
+    options: ["Não pratico", "Raramente (1x por semana)", "Às vezes (2-3x)", "Regularmente (4x ou mais)"],
     scores: [0, 1, 2, 3],
-    tip: "Exercicio regular melhora a qualidade do sono. Sistemas de IA ja demonstraram que personalizar exercicios melhora o sono como efeito secundario."
+    tip: "Exercício regular melhora a qualidade do sono. Sistemas de IA já demonstraram que personalizar exercícios melhora o sono como efeito secundário."
   },
   {
-    category: "Estresse",
+    catégory: "Estresse",
     catClass: "cat-estresse",
-    text: "Voce costuma ir para a cama com a mente acelerada (preocupacoes, lista de tarefas, ansiedade)?",
-    options: ["Sempre", "Na maioria das noites", "As vezes", "Raramente ou nunca"],
+    text: "Você costuma ir para a cama com a mente acelerada (preocupações, lista de tarefas, ansiedade)?",
+    options: ["Sempre", "Na maioria das noites", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "O estresse academico e mediador direto da qualidade do sono. Tecnicas de relaxamento e mindfulness antes de dormir ajudam a desacelerar."
+    tip: "O estresse acadêmico é mediador direto da qualidade do sono. Técnicas de relaxamento e mindfulness antes de dormir ajudam a desacelerar."
   },
   {
-    category: "Estresse",
+    catégory: "Estresse",
     catClass: "cat-estresse",
-    text: "Voce tem uma rotina de relaxamento antes de dormir (leitura, alongamento, respiracao)?",
-    options: ["Nunca", "Raramente", "As vezes", "Na maioria das noites"],
+    text: "Você tem uma rotina de relaxamento antes de dormir (leitura, alongamento, respiração)?",
+    options: ["Nunca", "Raramente", "Às vezes", "Na maioria das noites"],
     scores: [0, 1, 2, 3],
-    tip: "Ter uma rotina pre-sono sinaliza ao corpo que e hora de desacelerar. E um dos componentes presentes em todas as 5 escalas de higiene do sono validadas."
+    tip: "Ter uma rotina pré-sono sinaliza ao corpo que é hora de desacelerar. É um dos componentes presentes em todas as 5 escalas de higiene do sono validadas."
   }
 ];
 
@@ -464,7 +464,7 @@ function renderQuestion() {
   document.getElementById('progressText').textContent = `Pergunta ${currentQ + 1} de ${total}`;
 
   let html = `<div class="question-card">`;
-  html += `<span class="q-category ${q.catClass}">${q.category}</span>`;
+  html += `<span class="q-catégory ${q.catClass}">${q.catégory}</span>`;
   html += `<p class="q-text">${q.text}</p>`;
   html += `<div class="options">`;
 
@@ -481,7 +481,7 @@ function renderQuestion() {
 
   document.getElementById('btnBack').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
   document.getElementById('btnNext').disabled = answers[currentQ] === -1;
-  document.getElementById('btnNext').textContent = currentQ === total - 1 ? 'Ver resultado' : 'Proximo';
+  document.getElementById('btnNext').textContent = currentQ === total - 1 ? 'Ver resultado' : 'Próximo';
 }
 
 function selectOption(i) {
@@ -516,18 +516,18 @@ function showResult() {
   const maxScore = questions.length * 3;
   const pct = Math.round(total / maxScore * 100);
 
-  // Categories
+  // Categorias
   const cats = {
-    "Horarios": { score: 0, max: 0, items: [], color: "#85B7EB", bg: "rgba(46,117,182,0.15)" },
+    "Horários": { score: 0, max: 0, items: [], color: "#85B7EB", bg: "rgba(46,117,182,0.15)" },
     "Telas": { score: 0, max: 0, items: [], color: "#F09595", bg: "rgba(229,57,53,0.12)" },
     "Ambiente": { score: 0, max: 0, items: [], color: "#5DCAA5", bg: "rgba(26,122,109,0.15)" },
-    "Habitos": { score: 0, max: 0, items: [], color: "#F4C95D", bg: "rgba(244,201,93,0.12)" },
+    "Hábitos": { score: 0, max: 0, items: [], color: "#F4C95D", bg: "rgba(244,201,93,0.12)" },
     "Estresse": { score: 0, max: 0, items: [], color: "#CE93D8", bg: "rgba(149,117,205,0.15)" }
   };
 
   answers.forEach((a, i) => {
     const q = questions[i];
-    const cat = cats[q.category];
+    const cat = cats[q.catégory];
     cat.score += q.scores[a];
     cat.max += 3;
     if (q.scores[a] <= 1) cat.items.push(q.tip);
@@ -536,16 +536,16 @@ function showResult() {
   let level, levelColor, levelBg, desc;
   if (pct >= 80) {
     level = "Excelente"; levelColor = "#2E7D32"; levelBg = "rgba(46,125,50,0.15)";
-    desc = "Seus habitos de sono estao muito bons! Voce ja pratica a maioria das recomendacoes de higiene do sono. Continue assim e compartilhe esse conhecimento com colegas que possam precisar.";
+    desc = "Seus hábitos de sono estão muito bons! Você já pratica a maioria das recomendações de higiene do sono. Continue assim e compartilhe esse conhecimento com colegas que possam precisar.";
   } else if (pct >= 60) {
-    level = "Bom, com pontos de atencao"; levelColor = "#1A7A6D"; levelBg = "rgba(26,122,109,0.15)";
-    desc = "Voce tem bons habitos de sono, mas alguns pontos merecem atencao. Pequenos ajustes podem fazer uma grande diferenca na sua qualidade de sono e no seu desempenho academico.";
+    level = "Bom, com pontos de atenção"; levelColor = "#1A7A6D"; levelBg = "rgba(26,122,109,0.15)";
+    desc = "Você tem bons hábitos de sono, mas alguns pontos merecem atenção. Pequenos ajustes podem fazer uma grande diferença na sua qualidade de sono e no seu desempenho acadêmico.";
   } else if (pct >= 40) {
-    level = "Merece atencao"; levelColor = "#E6A817"; levelBg = "rgba(244,201,93,0.15)";
-    desc = "Sua higiene do sono precisa de melhorias em algumas areas. A boa noticia e que sao mudancas simples e graduais. Comece pelo ponto que parece mais facil de mudar e va progredindo.";
+    level = "Merece atenção"; levelColor = "#E6A817"; levelBg = "rgba(244,201,93,0.15)";
+    desc = "Sua higiene do sono precisa de melhorias em algumas áreas. A boa notícia é que são mudanças simples e graduais. Comece pelo ponto que parece mais fácil de mudar e vá progredindo.";
   } else {
     level = "Sinal de alerta"; levelColor = "#E53935"; levelBg = "rgba(229,57,53,0.12)";
-    desc = "Seus habitos de sono estao comprometendo significativamente sua qualidade de vida e provavelmente seu desempenho academico. Considere buscar orientacao profissional e comece a implementar as dicas do Guia do Sono hoje mesmo.";
+    desc = "Seus hábitos de sono estão comprometendo significativamente sua qualidade de vida e provavelmente seu desempenho acadêmico. Considere buscar orientação profissional e comece a implementar as dicas do Guia do Sono hoje mesmo.";
   }
 
   let html = `
@@ -555,13 +555,13 @@ function showResult() {
     </div>
     <div class="level-badge" style="background:${levelBg}; color:${levelColor};">${level}</div>
     <p class="level-desc">${desc}</p>
-    <div class="category-results">
+    <div class="catégory-results">
   `;
 
   for (const [name, cat] of Object.entries(cats)) {
     const catPct = Math.round(cat.score / cat.max * 100);
     const statusColor = catPct >= 70 ? "#5DCAA5" : catPct >= 40 ? "#F4C95D" : "#F09595";
-    const statusText = catPct >= 70 ? "Bom" : catPct >= 40 ? "Atencao" : "Critico";
+    const statusText = catPct >= 70 ? "Bom" : catPct >= 40 ? "Atenção" : "Crítico";
 
     html += `<div class="cat-result">
       <div class="cat-result-header">
@@ -578,27 +578,27 @@ function showResult() {
 
   html += `</div>`;
 
-  // Worst categories
+  // Piores categorias
   const worstCats = Object.entries(cats)
     .sort((a, b) => (a[1].score / a[1].max) - (b[1].score / b[1].max))
     .slice(0, 2);
 
   html += `<div class="result-footer">
-    <h3>Por onde comecar?</h3>
-    <p>Com base nas suas respostas, sugerimos focar primeiro em <strong>${worstCats[0][0]}</strong> e <strong>${worstCats[1][0]}</strong>. Escolha uma mudanca pequena em cada area e mantenha por 2 semanas antes de acrescentar outra. Mudancas graduais tem mais chance de se tornarem habitos permanentes.</p>
+    <h3>Por onde começar?</h3>
+    <p>Com base nas suas respostas, sugerimos focar primeiro em <strong>${worstCats[0][0]}</strong> e <strong>${worstCats[1][0]}</strong>. Escolha uma mudança pequena em cada área e mantenha por 2 semanas antes de acrescentar outra. Mudanças graduais têm mais chance de se tornarem hábitos permanentes.</p>
   </div>`;
 
-  html += `<button class="btn-restart" onclick="restart()">Refazer avaliacao</button>`;
+  html += `<button class="btn-restart" onclick="restart()">Refazer avaliação</button>`;
 
   html += `<div class="source">
-    <br>Autoavaliacao baseada nos componentes de higiene do sono<br>
-    identificados na revisao integrativa de 18 artigos cientificos.<br>
-    Guia do Sono — TCC Biomedicina, Centro Universitario Sao Camilo, 2026.
+    <br>Autoavaliação baseada nos componentes de higiene do sono<br>
+    identificados na revisão integrativa realizada para o Trabalho de Conclusão de Curso.<br>
+    Guia do Sono — TCC Biomedicina, Centro Universitário São Camilo, 2026.
   </div>`;
 
   resultDiv.innerHTML = html;
 
-  // Animate bars
+  // Animar barras
   setTimeout(() => {
     document.querySelectorAll('.cat-bar-fill').forEach(bar => {
       bar.style.width = bar.style.width;
