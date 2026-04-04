@@ -321,6 +321,54 @@ body {
 }
 .btn-restart:hover { background: rgba(255,255,255,0.12); }
 
+.btn-share {
+  background: #4A90E2;
+  color: #fff;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.btn-share:hover { background: #5EA3EE; }
+
+.btn-copy {
+  background: rgba(255,255,255,0.08);
+  color: #AAB0B8;
+}
+
+.share-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.share-text {
+  font-size: 14px;
+  color: #D8E1E8;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  white-space: pre-line;
+}
+
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.share-hint {
+  font-size: 12px;
+  color: #8899AA;
+  line-height: 1.4;
+}
+
 .source {
   margin-top: 24px;
   font-size: 11px;
@@ -387,7 +435,7 @@ const questions = [
     text: "Você usa celular, tablet ou computador nos 30 minutos antes de dormir?",
     options: ["Sempre, até pegar no sono", "Na maioria das noites", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "A luz azul das telas suprime a produção de melatonina. Estudos indicam que 100% dos universitários de uma amostra usavam telas antes de dormir."
+    tip: "Evite telas pelo menos uma hora antes de deitar. Isso ajuda a reduzir a exposição à luz azul e facilita o relaxamento."
   },
   {
     catégory: "Telas",
@@ -403,7 +451,7 @@ const questions = [
     text: "Seu quarto é escuro, silencioso e com temperatura agradável na hora de dormir?",
     options: ["Não, nenhuma dessas condições", "Apenas uma dessas condições", "Duas dessas condições", "Sim, todas as três"],
     scores: [0, 1, 2, 3],
-    tip: "Luz, ruído e temperatura são componentes ambientais da higiene do sono citados em mais de 30% dos estudos científicos."
+    tip: "Um quarto fresco, escuro e silencioso é um dos melhores aliados para um sono de qualidade. Ajuste luz e temperatura sempre que possível."
   },
   {
     catégory: "Ambiente",
@@ -411,7 +459,7 @@ const questions = [
     text: "Você usa a cama para outras atividades além de dormir (estudar, comer, assistir vídeos)?",
     options: ["Sempre", "Na maioria das vezes", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "O controle de estímulos é uma técnica validada: usar a cama só para dormir fortalece a associação mental entre cama e sono."
+    tip: "Mantenha a cama principalmente para dormir. Assim o ambiente fica mais associado ao descanso e menos ao trabalho ou lazer."
   },
   {
     catégory: "Hábitos",
@@ -419,7 +467,7 @@ const questions = [
     text: "Você consome café, energético ou chá preto após as 18h?",
     options: ["Todos os dias", "Na maioria dos dias", "Eventualmente", "Nunca ou raramente"],
     scores: [0, 1, 2, 3],
-    tip: "A cafeína é o componente de higiene do sono mais citado na literatura (51% dos estudos). O ideal é evitá-la pelo menos 6 horas antes de dormir."
+    tip: "Evite bebidas e alimentos com cafeína no fim do dia. Eles podem manter seu corpo em estado de alerta quando deveria relaxar."
   },
   {
     catégory: "Hábitos",
@@ -427,7 +475,7 @@ const questions = [
     text: "Você pratica alguma atividade física regularmente?",
     options: ["Não pratico", "Raramente (1x por semana)", "Às vezes (2-3x)", "Regularmente (4x ou mais)"],
     scores: [0, 1, 2, 3],
-    tip: "Exercício regular melhora a qualidade do sono. Sistemas de IA já demonstraram que personalizar exercícios melhora o sono como efeito secundário."
+    tip: "Exercícios regulares contribuem para um sono melhor e mais profundo, desde que não sejam feitos muito perto da hora de dormir."
   },
   {
     catégory: "Estresse",
@@ -435,7 +483,7 @@ const questions = [
     text: "Você costuma ir para a cama com a mente acelerada (preocupações, lista de tarefas, ansiedade)?",
     options: ["Sempre", "Na maioria das noites", "Às vezes", "Raramente ou nunca"],
     scores: [0, 1, 2, 3],
-    tip: "O estresse acadêmico é mediador direto da qualidade do sono. Técnicas de relaxamento e mindfulness antes de dormir ajudam a desacelerar."
+    tip: "Atividades relaxantes antes de dormir ajudam a desacelerar a mente e a preparar o corpo para o sono."
   },
   {
     catégory: "Estresse",
@@ -449,6 +497,8 @@ const questions = [
 
 let currentQ = 0;
 let answers = new Array(questions.length).fill(-1);
+
+let shareMessage = '';
 
 function startQuiz() {
   document.getElementById('intro').classList.add('hidden');
@@ -588,6 +638,16 @@ function showResult() {
     <p>Com base nas suas respostas, sugerimos focar primeiro em <strong>${worstCats[0][0]}</strong> e <strong>${worstCats[1][0]}</strong>. Escolha uma mudança pequena em cada área e mantenha por 2 semanas antes de acrescentar outra. Mudanças graduais têm mais chance de se tornarem hábitos permanentes.</p>
   </div>`;
 
+  html += `<div class="share-card" id="shareCard">
+      <h3 style="margin-bottom:12px; color:#fff;">Compartilhe seu resultado</h3>
+      <p class="share-text" id="shareText"></p>
+      <div class="share-actions">
+        <button class="btn-nav btn-share" onclick="shareResult()">Abrir recurso de compartilhamento</button>
+        <button class="btn-nav btn-copy" onclick="copyResult()">Copiar texto</button>
+      </div>
+      <p class="share-hint" id="shareHint">Use este espaço para compartilhar seu resultado no WhatsApp, Telegram ou outra rede social.</p>
+    </div>`;
+
   html += `<button class="btn-restart" onclick="restart()">Refazer avaliação</button>`;
 
   html += `<div class="source">
@@ -598,12 +658,47 @@ function showResult() {
 
   resultDiv.innerHTML = html;
 
+  shareMessage = `Meu resultado no teste de higiene do sono: ${total}/${maxScore} pontos (${pct}%). Nível: ${level}. ` +
+    `Sugestão: comece por ${worstCats[0][0]} e ${worstCats[1][0]}. ` +
+    `Faça o teste para entender melhor seus hábitos e melhorar sua qualidade de sono.`;
+  const shareTextEl = document.getElementById('shareText');
+  if (shareTextEl) shareTextEl.textContent = shareMessage;
+
   // Animar barras
   setTimeout(() => {
     document.querySelectorAll('.cat-bar-fill').forEach(bar => {
       bar.style.width = bar.style.width;
     });
   }, 100);
+}
+
+function toggleShareCard() {
+  const card = document.getElementById('shareCard');
+  if (!card) return;
+  card.classList.toggle('hidden');
+}
+
+function shareResult() {
+  if (!shareMessage) return;
+  if (navigator.share) {
+    navigator.share({
+      title: 'Meu resultado no teste de higiene do sono',
+      text: shareMessage
+    }).catch(() => {
+      copyResult();
+    });
+  } else {
+    copyResult();
+  }
+}
+
+function copyResult() {
+  const hint = document.getElementById('shareHint');
+  navigator.clipboard.writeText(shareMessage).then(() => {
+    if (hint) hint.textContent = 'Texto copiado! Agora cole em um chat ou rede social.';
+  }).catch(() => {
+    if (hint) hint.textContent = 'Não foi possível copiar automaticamente. Selecione o texto acima e copie manualmente.';
+  });
 }
 
 function restart() {
